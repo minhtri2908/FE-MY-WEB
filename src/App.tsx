@@ -2,14 +2,8 @@ import "./App.css";
 const aboutData = {
   avatar: "https://same-assets.com/placeholder-avatar.png",
   name: "Phạm Minh Trí",
-  title: "Fullstack Developer & Blogger",
-  bio: "Chào bạn! Tôi là Trí, đam mê phát triển web ứng dụng và chia sẻ niềm vui với mọi người",
-  contact: [
-    { label: "Email", value: "letinhminh@gmail.com" },
-    { label: "Phone", value: "+84 987 654 321" },
-    { label: "Location", value: "Vietnam" },
-  ],
-  skills: ["ReactJS", "NodeJS", "TypeScript", "SQL", "UI/UX"],
+  title: "Fullstack Developer & Photographer",
+  bio: "Chào bạn! Tôi là Trí, đam mê phát triển web ứng dụng và chia sẻ niềm vui với mọi người bằng hình ảnh",
 };
 
 const data = [
