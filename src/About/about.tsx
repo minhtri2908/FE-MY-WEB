@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../api.ts";
-import axios from "axios";
 import { marked } from "marked";
 const renderer = new marked.Renderer();
-renderer.link = ({ href, title, text }) => {
+renderer.link = ({ href, text }) => {
   return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="underline text-black-600 hover:text-blue-800">${text}</a>`;
 };
 
