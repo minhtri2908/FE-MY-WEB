@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import api from "../api.ts";
 import axios from "axios";
 import { marked } from "marked";
 const renderer = new marked.Renderer();
@@ -34,24 +35,27 @@ export default function About() {
     items: string[];
   };
   const [skills, setSkills] = useState<Skill[]>([]);
-
-  useEffect(() => {
-    axios
-      .get("/api/skills")
-      .then((res) => setSkills(res.data));
-  }, []);
-
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [educations, setEducations] = useState<Education[]>([]);
   useEffect(() => {
-    axios
-      .get("/api/experiences")
-      .then((res) => setExperiences(res.data));
+    api
+      .get("/skills")
+      .then((res) => setSkills(res.data))
+      .catch((err) => console.error("Error fetching skills:", err));
   }, []);
+
   useEffect(() => {
-    axios
-      .get("/api/educations")
-      .then((res) => setEducations(res.data));
+    api
+      .get("/experiences")
+      .then((res) => setExperiences(res.data))
+      .catch((err) => console.error("Error fetching experiences:", err));
+  }, []);
+
+  useEffect(() => {
+    api
+      .get("/educations")
+      .then((res) => setEducations(res.data))
+      .catch((err) => console.error("Error fetching educations:", err));
   }, []);
   return (
     <>

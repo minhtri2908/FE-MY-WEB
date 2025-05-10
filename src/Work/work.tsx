@@ -1,4 +1,4 @@
-export default function work() {
+export default function Work() {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-50 px-4">
       <div className="text-center">
