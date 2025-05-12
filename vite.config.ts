@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api-my-web.onrender.com',
+        target: 'https://api-my-web.fly.dev',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '/api'),
       },
