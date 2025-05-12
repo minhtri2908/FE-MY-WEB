@@ -5,6 +5,7 @@ const renderer = new marked.Renderer();
 renderer.link = ({ href, text }) => {
   return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="underline text-black-600 hover:text-blue-800">${text}</a>`;
 };
+import Spinner from "../Loading_spinner/Spinner.tsx";
 
 marked.setOptions({ renderer });
 
@@ -36,26 +37,33 @@ export default function About() {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [educations, setEducations] = useState<Education[]>([]);
+  const [skillsLoading, setSkillsLoading] = useState(true);
+  const [experiencesLoading, setExperiencesLoading] = useState(true);
+  const [educationsLoading, setEducationsLoading] = useState(true);
   useEffect(() => {
     api
       .get("/skills")
       .then((res) => setSkills(res.data))
-      .catch((err) => console.error("Error fetching skills:", err));
+      .catch((err) => console.error("Error fetching skills:", err))
+      .finally(() => setSkillsLoading(false));
   }, []);
 
   useEffect(() => {
     api
       .get("/experiences")
       .then((res) => setExperiences(res.data))
-      .catch((err) => console.error("Error fetching experiences:", err));
+      .catch((err) => console.error("Error fetching experiences:", err))
+      .finally(() => setExperiencesLoading(false));
   }, []);
 
   useEffect(() => {
     api
       .get("/educations")
       .then((res) => setEducations(res.data))
-      .catch((err) => console.error("Error fetching educations:", err));
+      .catch((err) => console.error("Error fetching educations:", err))
+      .finally(() => setEducationsLoading(false));
   }, []);
+
   return (
     <>
       <article className="block items-center justify-between mx-auto w-full max-w-[760px]">
@@ -98,80 +106,92 @@ export default function About() {
           <h2 className="flex pt-[30px] font-bold text-[1.8rem]">
             Kinh nghiệm
           </h2>
-
-          {experiences.map((exp, idx) => (
-            <section key={idx} className="mt-4">
-              <h3 className="flex text-[1.5rem] font-semibold">
-                {exp.company}
-              </h3>
-              <ul className="mt-2 space-y-2">
-                {exp.positions.map((pos, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center gap-2 text-[1rem] pt-3"
-                  >
-                    <span className="font-medium">{pos.title}</span>
-                    <span className="bg-gray-200 text-xs font-mono px-2 py-0.5 rounded">
-                      {pos.start} – {pos.end}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              {/* <p className="text-sm mt-2 text-blue-600 underline">
+          {experiencesLoading ? (
+            <Spinner />
+          ) : (
+            experiences.map((exp, idx) => (
+              <section key={idx} className="mt-4">
+                <h3 className="flex text-[1.5rem] font-semibold">
+                  {exp.company}
+                </h3>
+                <ul className="mt-2 space-y-2">
+                  {exp.positions.map((pos, i) => (
+                    <li
+                      key={i}
+                      className="flex items-center gap-2 text-[1rem] pt-3"
+                    >
+                      <span className="font-medium">{pos.title}</span>
+                      <span className="bg-gray-200 text-xs font-mono px-2 py-0.5 rounded">
+                        {pos.start} – {pos.end}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                {/* <p className="text-sm mt-2 text-blue-600 underline">
                 <a href={exp.link} target="_blank" rel="noreferrer">
                   {exp.link}
                 </a>
               </p> */}
-              <p
-                className="text-justify mt-2 text-[1rem] text-gray-700"
-                dangerouslySetInnerHTML={{ __html: marked(exp.description) }}
-              />
-              <p
-                className="text-justify mt-1 text-[1rem] text-gray-700 pt-3"
-                dangerouslySetInnerHTML={{ __html: marked(exp.detail) }}
-              />
+                <p
+                  className="text-justify mt-2 text-[1rem] text-gray-700"
+                  dangerouslySetInnerHTML={{ __html: marked(exp.description) }}
+                />
+                <p
+                  className="text-justify mt-1 text-[1rem] text-gray-700 pt-3"
+                  dangerouslySetInnerHTML={{ __html: marked(exp.detail) }}
+                />
 
-              <hr className="mt-2 border-t border-gray-300 p-1" />
-            </section>
-          ))}
-
+                <hr className="mt-2 border-t border-gray-300 p-1" />
+              </section>
+            ))
+          )}
           {/* PHẦN KỸ NĂNG */}
           <h2 className="flex pt-[30px] font-bold text-[1.8rem]">
             Kỹ năng chuyên môn
           </h2>
-          {skills.map((group, idx) => (
-            <section key={idx} className="mt-4">
-              <h3 className="flex font-bold text-[1.3rem]">{group.category}</h3>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {group.items.map((item, i) => (
-                  <span
-                    key={i}
-                    className="bg-gray-100 text-sm font-mono px-2 py-1 rounded"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </section>
-          ))}
+          {skillsLoading ? (
+            <Spinner />
+          ) : (
+            skills.map((group, idx) => (
+              <section key={idx} className="mt-4">
+                <h3 className="flex font-bold text-[1.3rem]">
+                  {group.category}
+                </h3>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {group.items.map((item, i) => (
+                    <span
+                      key={i}
+                      className="bg-gray-100 text-sm font-mono px-2 py-1 rounded"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            ))
+          )}
           <hr className="mt-2 border-t border-gray-300" />
           {/* PHẦN HIỂN THỊ GIÁO DỤC */}
           <h2 className="flex pt-[30px] font-bold text-[1.8rem]">Giáo dục</h2>
-          {educations.map((edu, idx) => (
-            <section key={idx} className="mt-4">
-              <h3 className="flex text-lg font-bold">{edu.degree}</h3>
-              <p className="text-[1rem] font-semibold flex mt-2">
-                {edu.school}
-                <span className="font-normal ml-1">({edu.university})</span>
-              </p>
-              <p className="text-[1rem] flex italic mt-2">
-                Chuyên ngành{" "}
-                <span className="ml-1 font-semibold">{edu.major}</span>,{" "}
-                {edu.batch}
-              </p>
-              <hr className="mt-2 border-t border-gray-300" />
-            </section>
-          ))}
+          {educationsLoading ? (
+            <Spinner />
+          ) : (
+            educations.map((edu, idx) => (
+              <section key={idx} className="mt-4">
+                <h3 className="flex text-lg font-bold">{edu.degree}</h3>
+                <p className="text-[1rem] font-semibold flex mt-2">
+                  {edu.school}
+                  <span className="font-normal ml-1">({edu.university})</span>
+                </p>
+                <p className="text-[1rem] flex italic mt-2">
+                  Chuyên ngành{" "}
+                  <span className="ml-1 font-semibold">{edu.major}</span>,{" "}
+                  {edu.batch}
+                </p>
+                <hr className="mt-2 border-t border-gray-300" />
+              </section>
+            ))
+          )}
         </div>
       </article>
     </>

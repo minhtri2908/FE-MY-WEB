@@ -16,6 +16,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Navbar />
     <BrowserRouter>
+     <div className="pt-20"> {/* đẩy nội dung xuống dưới navbar */}
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
@@ -23,6 +24,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/hobby" element={<Hobby />} />
         <Route path="/work" element={<Work />} />
       </Routes>
+      </div>
     </BrowserRouter>
     <Footer />
   </StrictMode>
