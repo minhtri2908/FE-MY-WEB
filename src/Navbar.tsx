@@ -40,7 +40,7 @@ export default function Navbar() {
 
   
   return (
-    <nav className="p-[20px] shadow-md z-50 bg-white fixed top-0 left-0 w-full ">
+    <nav className="p-[20px] shadow-md z-50 bg-white fixed top-0 left-0 w-full">
       <div className="flex items-center justify-between mx-auto w-full max-w-[760px]">
       <a href="/" className="font-mono font-bold text-lg text-black px-2 py-1 rounded-md">
           <span className="text-green-400">{'>'}</span> {text}

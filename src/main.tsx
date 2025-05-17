@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Navbar />
     <BrowserRouter>
-     <div className="pt-20"> {/* đẩy nội dung xuống dưới navbar */}
+     <div className="pt-20 w-full max-w-screen overflow-x-hidden px-4"> 
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
