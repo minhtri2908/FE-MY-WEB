@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 // import 'bootstrap/dist/css/bootstrap.min.css';
-// import './index.css'
+import './index.css'
 import "tailwindcss";
 import App from "./App.tsx";
 import About from "./About/about";

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api.ts";
 import { marked } from "marked";
+
 const renderer = new marked.Renderer();
 renderer.link = ({ href, text }) => {
   return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="underline text-black-600 hover:text-blue-800">${text}</a>`;
@@ -75,7 +76,7 @@ export default function About() {
             className="w-full rounded-md shadow "
           />
         </figure>
-        <div className="post-content-article  text-[1.7rem] ">
+        <div className="post-content-article text-[1.7rem]">
           <h2>
             <strong className="flex">Phạm Minh Trí</strong>
           </h2>
