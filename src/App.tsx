@@ -54,8 +54,8 @@ export default function App() {
               spaceBetween={20}
               slidesPerView={1.5}
               centeredSlides={true}
-              loop={true}
               freeMode={true}
+              grabCursor={true}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
