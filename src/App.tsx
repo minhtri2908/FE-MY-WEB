@@ -55,6 +55,7 @@ export default function App() {
               slidesPerView={1.5}
               centeredSlides={true}
               loop={true}
+              freeMode={true}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
