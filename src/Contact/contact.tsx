@@ -31,7 +31,7 @@ const Contact = () => {
       <h2 className="text-4xl font-bold text-center mb-2">Get in touch</h2>
       <p className="text-center text-gray-500 mb-10">Contact Me</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-10 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-10 items-stretch justify-center">
         <div className="space-y-6 ">
           <a>Talk to Me</a>
           <ContactCard
@@ -41,14 +41,14 @@ const Contact = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth={1.5}
                   stroke="currentColor"
+                  strokeWidth={1.5}
                   className="w-6 h-6 text-black"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m0 0A2.25 2.25 0 014.5 4.5h15a2.25 2.25 0 012.25 2.25zm0 0L12 13.5 2.25 6.75"
+                    d="M3 6.75L12 13.5l9-6.75M4.5 18h15a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0019.5 6h-15A1.5 1.5 0 003 7.5v9A1.5 1.5 0 004.5 18z"
                   />
                 </svg>
               </div>
@@ -60,28 +60,17 @@ const Contact = () => {
             icon={
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
                 <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  className="w-6 h-6 text-black"
                 >
                   <path
-                    d="M14 2C14 2 16.2 2.2 19 5C21.8 7.8 22 10 22 10"
-                    stroke="#1C274C"
-                    strokeWidth="1.5"
                     strokeLinecap="round"
-                  />
-                  <path
-                    d="M14.207 5.53564C14.207 5.53564 15.197 5.81849 16.6819 7.30341C18.1668 8.78834 18.4497 9.77829 18.4497 9.77829"
-                    stroke="#1C274C"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M4.00655 7.93309C3.93421 9.84122 4.41713 13.0817 7.6677 16.3323C8.45191 17.1165 9.23553 17.7396 10 18.2327M5.53781 4.93723C6.93076 3.54428 9.15317 3.73144 10.0376 5.31617L10.6866 6.4791C11.2723 7.52858 11.0372 8.90532 10.1147 9.8278C10.1147 9.8278 10.1147 9.8278 10.1147 9.8278C10.1146 9.82792 8.99588 10.9468 11.0245 12.9755C13.0525 15.0035 14.1714 13.8861 14.1722 13.8853C14.1722 13.8853 14.1722 13.8853 14.1722 13.8853C15.0947 12.9628 16.4714 12.7277 17.5209 13.3134L18.6838 13.9624C20.2686 14.8468 20.4557 17.0692 19.0628 18.4622C18.2258 19.2992 17.2004 19.9505 16.0669 19.9934C15.2529 20.0243 14.1963 19.9541 13 19.6111"
-                    stroke="#1C274C"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.5 2.25h-9A2.25 2.25 0 005.25 4.5v15a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-15A2.25 2.25 0 0016.5 2.25zM9 18.75h6"
                   />
                 </svg>
               </div>
@@ -94,11 +83,11 @@ const Contact = () => {
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 320 512"
+                  className="w-5 h-5 text-black"
                   fill="currentColor"
-                  className="w-6 h-6 text-black"
                 >
-                  <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 5 3.66 9.13 8.44 9.88v-6.99H7.9v-2.89h2.54V9.83c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.89h-2.3v6.99C18.34 21.13 22 17 22 12z" />
+                  <path d="M279.14 288l14.22-92.66h-88.91V131.77c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.11 0-121.09 44.38-121.09 124.72v70.62H22.89V288h81.38v224h100.2V288z" />
                 </svg>
               </div>
             }
@@ -165,7 +154,7 @@ const ContactCard = ({
   detail: string;
   linkText?: string;
 }) => (
-  <div className="w-full max-w-xs border border-gray-200 rounded-xl p-6 mt-6 bg-white shadow">
+  <div className="w-full  border border-gray-200 rounded-xl p-6 mt-6 bg-white shadow">
     <div className="flex justify-center  mb-2">{icon}</div>
     <h4 className="font-semibold">{title}</h4>
     <p className="text-gray-700">{detail}</p>
