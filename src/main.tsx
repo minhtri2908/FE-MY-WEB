@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-
+import { Navigate } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 import About from "./About/about";
@@ -23,6 +23,10 @@ const Root = () => {
       {!hideLayout && <Navbar />}
       <div className={`pt-20 w-full max-w-screen overflow-x-hidden px-4`}>
         <Routes>
+          <Route
+            path="/admin"
+            element={<Navigate to="/admin/dashboard" replace />}
+          />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route
             path="/admin/dashboard"
