@@ -10,9 +10,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const res = await api.get("/contacts/", {
-          withCredentials: true,
-        });
+        const res = await api.get("/contacts/");
         setContacts(res.data);
       } catch (err) {
         console.error("Lỗi khi lấy danh sách liên hệ:", err);
