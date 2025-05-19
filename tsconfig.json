@@ -1,4 +1,9 @@
 {
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["react", "react-dom"],
+    "lib": ["dom", "dom.iterable", "esnext"]
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
