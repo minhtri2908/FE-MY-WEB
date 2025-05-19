@@ -1,4 +1,5 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+// import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
@@ -15,12 +16,13 @@ import AdminLogin from "./AdminLogin/AdminLogin.tsx";
 import AdminDashboard from "./AdminLogin/AdminDashboard";
 import RequireAdminAuth from "./RequireAdminAuth.tsx";
 const Root = () => {
-  const location = useLocation();
-  const hideLayout = location.pathname.startsWith("/admin");
+  // const location = useLocation();
+  // const hideLayout = location.pathname.startsWith("/admin");
 
   return (
     <>
-      {!hideLayout && <Navbar />}
+      {/* {!hideLayout && <Navbar />} */}
+      <Navbar />
       <div className={`pt-20 w-full max-w-screen overflow-x-hidden px-4`}>
         <Routes>
           <Route
@@ -43,7 +45,8 @@ const Root = () => {
           <Route path="/work" element={<Work />} />
         </Routes>
       </div>
-      {!hideLayout && <Footer />}
+      {/* {!hideLayout && <Footer />} */}
+      <Footer />
     </>
   );
 };
