@@ -216,15 +216,15 @@ const FormTextArea = ({
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }) => (
   <div className="relative w-full mt-6">
-    <label className="absolute left-3 -top-3 bg-white px-1 text-sm text-gray-500 peer-focus:text-black">
-      {label}
-    </label>
     <textarea
       name={name}
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="w-full border border-gray-400 rounded-md px-4 py-2 h-60 outline-none focus:border-black"
+      className="peer w-full resize-none border border-gray-400 rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-60 "
     ></textarea>
+    <label className="absolute left-3 -top-3 bg-white px-1 text-sm text-gray-500 peer-focus:text-black">
+      {label}
+    </label>
   </div>
 );
