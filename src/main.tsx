@@ -15,6 +15,7 @@ import Work from "./Work/work";
 import AdminLogin from "./AdminLogin/AdminLogin.tsx";
 import AdminDashboard from "./AdminLogin/AdminDashboard";
 import RequireAdminAuth from "./RequireAdminAuth.tsx";
+import ScrollToTopButton from "./component/ScrollToTopButton.tsx";
 const Root = () => {
   // const location = useLocation();
   // const hideLayout = location.pathname.startsWith("/admin");
@@ -23,7 +24,7 @@ const Root = () => {
     <>
       {/* {!hideLayout && <Navbar />} */}
       <Navbar />
-      <div className={`pt-20 w-full max-w-screen overflow-x-hidden px-4`}>
+      <div className={`pt-20 w-full max-w-screen overflow-x-hidden px-4 bg-[#f2f2f2]`}>
         <Routes>
           <Route
             path="/admin"
@@ -47,6 +48,7 @@ const Root = () => {
       </div>
       {/* {!hideLayout && <Footer />} */}
       <Footer />
+      <ScrollToTopButton />
     </>
   );
 };

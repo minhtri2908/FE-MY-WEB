@@ -154,7 +154,7 @@ const ContactCard = ({
   detail: string;
   linkText?: string;
 }) => (
-  <div className="w-full  border border-gray-200 rounded-xl p-6 mt-6 bg-white shadow">
+  <div className="w-full  border border-gray-200 rounded-xl p-6 mt-6 bg-[#f8f5f5] shadow">
     <div className="flex justify-center  mb-2">{icon}</div>
     <h4 className="font-semibold">{title}</h4>
     <p className="text-gray-700">{detail}</p>
@@ -196,7 +196,7 @@ const FormInput = ({
       placeholder={placeholder}
       className="peer w-full border border-gray-400 rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-15"
     />
-    <label className="absolute left-3 -top-3 bg-white px-1 text-sm text-gray-500 peer-focus:text-black">
+    <label className="absolute left-3 -top-3 bg-[#f2f2f2] px-1 text-sm text-gray-500 peer-focus:text-black">
       {label}
     </label>
   </div>
@@ -223,7 +223,7 @@ const FormTextArea = ({
       placeholder={placeholder}
       className="peer w-full resize-none border border-gray-400 rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-60 "
     ></textarea>
-    <label className="absolute left-3 -top-3 bg-white px-1 text-sm text-gray-500 peer-focus:text-black">
+    <label className="absolute left-3 -top-3 bg-[#f2f2f2] px-1 text-sm text-gray-500 peer-focus:text-black">
       {label}
     </label>
   </div>

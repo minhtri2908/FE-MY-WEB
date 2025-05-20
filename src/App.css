@@ -46,3 +46,24 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+@keyframes morphRounded {
+  0%, 100% {
+    border-bottom-left-radius: 67.7% 41.5%;
+    border-bottom-right-radius: 33.0% 66.9%;
+    border-top-left-radius: 57.7% 59.2%;
+    border-top-right-radius: 41.5% 32.2%;
+  }
+  50% {
+    border-bottom-left-radius: 40% 60%;
+    border-bottom-right-radius: 60% 40%;
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 30% 70%;
+  }
+}
+
+.animate-morph-rounded {
+  animation: morphRounded 5s ease-in-out infinite;
+}
+.img-border-light {
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5);
+}

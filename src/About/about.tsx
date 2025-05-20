@@ -87,7 +87,7 @@ export default function About() {
             {tags.map((tag, index) => (
               <span
                 key={index}
-                className="bg-gray-100 text-sm font-mono px-2 py-1 rounded"
+                className="bg-gray-200 text-sm font-mono px-2 py-1 rounded"
               >
                 #{tag}
               </span>
@@ -162,7 +162,7 @@ export default function About() {
                   {group.items.map((item, i) => (
                     <span
                       key={i}
-                      className="bg-gray-100 text-sm font-mono px-2 py-1 rounded"
+                      className="bg-gray-200 text-sm font-mono px-2 py-1 rounded"
                     >
                       {item}
                     </span>

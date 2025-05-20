@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import Contact from "./Contact/contact";
+import ScrollDownButton from "./component/ScrollDownButton";
 import { Pagination, Autoplay } from "swiper/modules";
 import "./App.css";
 const aboutData = {
   avatar: "https://same-assets.com/placeholder-avatar.png",
   name: "Phạm Minh Trí",
   title: "Fullstack Developer & Photographer",
-  bio: "Chào bạn! Tôi là Trí, đam mê phát triển web ứng dụng và chia sẻ niềm vui với mọi người bằng hình ảnh",
+  bio: "Tôi là Intern Fullstack Developer & Photographer, đam mê phát triển web ứng dụng và chia sẻ niềm vui với mọi người bằng hình ảnh, Rất vui được gặp tất cả các bạn! Hãy tham quan trang web của tôi.",
 };
 
 const data = [
@@ -38,11 +39,11 @@ export default function App() {
             <img
               src="/image/IMG_9261.jpg"
               alt="avatar"
-              className="rounded-full shadow w-[180px] h-[180px] object-cover bg-white"
+              className="shadow w-[180px] h-[180px] object-cover bg-white animate-morph-rounded"
             />
           </div>
-          <h1 className="text-[3.7rem] mb-4 font-bold">
-            Xin Chào
+          <h1 className="text-[2.5rem] sm:text-[3.7rem] mb-4 font-bold flex items-center justify-center gap-2">
+            <span>Xin Chào</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 36 36"
@@ -61,9 +62,14 @@ export default function App() {
           </h1>
           <div className="w-full text-center md:text-left">
             <h2 className="font-bold text-2xl mb-1">Tôi là {aboutData.name}</h2>
-            <h5 className="text-gray-500 text-lg mb-3">{aboutData.title}</h5>
+            {/* <h5 className="text-gray-500 text-lg mb-3">{aboutData.title}</h5> */}
+            <p className="text-gray-500 text-base mb-6 max-w-[600px] mx-auto leading-relaxed">{aboutData.bio}</p>
+            <div className="mb-6 flex justify-center">
+              <ScrollDownButton />
+            </div>
           </div>
         </div>
+
         <div className="w-[90%] mb-2">
           {isMobile ? (
             <Swiper
