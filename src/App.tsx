@@ -9,7 +9,7 @@ const aboutData = {
   avatar: "https://same-assets.com/placeholder-avatar.png",
   name: "Phạm Minh Trí",
   title: "Fullstack Developer & Photographer",
-  bio: "Một Intern Fullstack Developer & Photographer, đam mê phát triển web ứng dụng và chia sẻ niềm vui với mọi người bằng hình ảnh, Rất vui được gặp tất cả các bạn! Hãy tham quan trang web của tôi.",
+  bio: "Một Intern Fullstack Developer & Photographer, đam mê phát triển web ứng dụng và chia sẻ niềm vui với mọi người bằng hình ảnh, rất vui được gặp tất cả các bạn! Hãy tham quan trang web của tôi.",
 };
 
 const data = [
