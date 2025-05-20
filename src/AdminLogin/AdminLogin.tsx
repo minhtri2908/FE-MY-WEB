@@ -24,7 +24,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="min-h-[calc(100vh-10rem)] flex items-center justify-center px-4">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded shadow max-w-sm w-full"

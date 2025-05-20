@@ -1,4 +1,3 @@
-// import { Routes, Route, useLocation } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -16,15 +15,13 @@ import AdminLogin from "./AdminLogin/AdminLogin.tsx";
 import AdminDashboard from "./AdminLogin/AdminDashboard";
 import RequireAdminAuth from "./RequireAdminAuth.tsx";
 import ScrollToTopButton from "./component/ScrollToTopButton.tsx";
+import TitleUpdater from "./component/TitleUpdater.tsx";
 const Root = () => {
-  // const location = useLocation();
-  // const hideLayout = location.pathname.startsWith("/admin");
-
   return (
-    <>
-      {/* {!hideLayout && <Navbar />} */}
+    <div className="min-h-screen flex flex-col bg-[#f2f2f2]">
       <Navbar />
-      <div className={`pt-20 w-full max-w-screen overflow-x-hidden px-4 bg-[#f2f2f2]`}>
+      <div className="flex-grow pt-20 px-4 overflow-x-hidden">
+        <TitleUpdater />
         <Routes>
           <Route
             path="/admin"
@@ -46,10 +43,9 @@ const Root = () => {
           <Route path="/work" element={<Work />} />
         </Routes>
       </div>
-      {/* {!hideLayout && <Footer />} */}
       <Footer />
       <ScrollToTopButton />
-    </>
+    </div>
   );
 };
 
