@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api.ts";
 import { marked } from "marked";
-
+import { FileDown } from "lucide-react";
 const renderer = new marked.Renderer();
 renderer.link = ({ href, text }) => {
   return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="underline text-black-600 hover:text-blue-800">${text}</a>`;
@@ -77,23 +77,38 @@ export default function About() {
           />
         </figure>
         <div className="post-content-article text-[1.7rem]">
-          <h2>
-            <strong className="flex">Phạm Minh Trí</strong>
-          </h2>
-          <div className="w-full pt-[10px] flex items-center flex-wrap gap-2">
-            <span className="font-semibold text-lg ">
-              Intern Fullstack Developer
-            </span>
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-gray-200 text-sm font-mono px-2 py-1 rounded"
-              >
-                #{tag}
-              </span>
-            ))}
+          <div className="w-full flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h2 className="flex">
+                <strong className="text-[1.7rem]">Phạm Minh Trí</strong>
+              </h2>
+              <div className="pt-[10px] flex items-center flex-wrap gap-2">
+                <span className="font-semibold text-lg">
+                  Intern Fullstack Developer
+                </span>
+                {tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-200 text-sm font-mono px-2 py-1 rounded"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <a
+              href="https://drive.google.com/uc?export=download&id=1iM2yL8wNUmYWzXKJFdc0G6v285LNCN-w"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-800 transition"
+            >
+              Download CV
+              <FileDown className="w-4 h-4" />
+            </a>
           </div>
+
           <hr className="mt-2 border-t border-gray-300" />
+
           <h2>
             <strong className="flex pt-[50px]">Đôi Lời</strong>
           </h2>

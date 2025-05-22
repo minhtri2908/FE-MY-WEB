@@ -28,12 +28,12 @@ const Contact = () => {
   };
   return (
     <div className="px-4 sm:px-8 py-12 mx-auto  max-w-[760px]">
-      <h2 className="text-4xl font-bold text-center mb-2">Get in touch</h2>
-      <p className="text-center text-gray-500 mb-10">Contact Me</p>
+      <h2 className="text-4xl font-bold text-center mb-2">Góc Liên Hệ</h2>
+      <p className="text-center text-gray-500 mb-10">Hãy để lại lời nhắn, tôi sẽ phản hồi trong thời gian sớm nhất!</p>
 
       <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-10 items-stretch justify-center">
         <div className="space-y-6 ">
-          <a>Talk to Me</a>
+          <a className="font-bold ">Liên hệ trực tiếp</a>
           <ContactCard
             icon={
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-100">
@@ -99,7 +99,7 @@ const Contact = () => {
 
         {/* Right Side - Contact Form */}
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <a>Write me your jobs description</a>
+          <a className="font-bold ">Gửi tôi mô tả công việc hoặc lời nhắn của bạn</a>
           <FormInput
             label="Name"
             placeholder="Insert your name"
