@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
+type Contact = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  details: string;
+  createdAt: string;
+};
 
 const AdminDashboard = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -31,7 +39,18 @@ const AdminDashboard = () => {
       console.error("Lỗi khi logout:", err);
     }
   };
+  const handleDelete = async (id: string) => {
+    const confirm = window.confirm("Bạn có chắc muốn xoá liên hệ này?");
+    if (!confirm) return;
 
+    try {
+      await api.delete(`/contacts/${id}`, { withCredentials: true });
+      setContacts((prev) => prev.filter((contact) => contact._id !== id));
+    } catch (err) {
+      console.error("Lỗi khi xoá liên hệ:", err);
+      alert("Không thể xoá liên hệ.");
+    }
+  };
   return (
     <div className="p-6">
       {/* Header */}
@@ -57,6 +76,7 @@ const AdminDashboard = () => {
               <th className="py-2 px-4 border">SĐT</th>
               <th className="py-2 px-4 border">Chi tiết</th>
               <th className="py-2 px-4 border">Thời gian</th>
+              <th className="py-2 px-4 border">Thao tác</th>
             </tr>
           </thead>
           <tbody>
@@ -69,6 +89,14 @@ const AdminDashboard = () => {
                 <td className="py-2 px-4 border">{contact.details}</td>
                 <td className="py-2 px-4 border text-sm text-gray-500">
                   {new Date(contact.createdAt).toLocaleString("vi-VN")}
+                </td>
+                <td className="py-2 px-4 border text-center">
+                  <button
+                    onClick={() => handleDelete(contact._id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm"
+                  >
+                    Xoá
+                  </button>
                 </td>
               </tr>
             ))}
