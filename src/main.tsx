@@ -15,7 +15,9 @@ import AdminDashboard from "./AdminLogin/AdminDashboard";
 import RequireAdminAuth from "./RequireAdminAuth.tsx";
 import ScrollToTopButton from "./component/ScrollToTopButton.tsx";
 import TitleUpdater from "./component/TitleUpdater.tsx";
+import useWakeupAPI from "./hooks/useWakeupAPI.ts";
 const Root = () => {
+  useWakeupAPI();
   return (
     <div className="min-h-screen flex flex-col bg-[#f2f2f2]">
       <Navbar />

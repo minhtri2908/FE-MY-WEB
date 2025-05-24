@@ -125,8 +125,8 @@ const AdminDashboard = () => {
                 <td className="py-2 px-4 border">{contact.name}</td>
                 <td className="py-2 px-4 border">{contact.email}</td>
                 <td className="py-2 px-4 border">{contact.phone}</td>
-                <td className="py-2 px-4 border whitespace-pre-wrap">
-                  <ReactMarkdown>{contact.details}</ReactMarkdown>
+                <td className="text-left py-2 px-4 border whitespace-pre-wrap">
+                  <ReactMarkdown>{contact.details.replace(/__/g, '\\_\\_')}</ReactMarkdown>
                 </td>
                 <td className="py-2 px-4 border text-sm text-gray-500">
                   {new Date(contact.createdAt).toLocaleString("vi-VN")}
