@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
-
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchContacts = async () => {
@@ -41,12 +41,15 @@ const AdminDashboard = () => {
   }, [page]);
 
   const handleLogout = async () => {
+    setIsLoading(true);
     try {
       await api.post("/admin/logout", null, { withCredentials: true });
       navigate("/admin/login");
     } catch (err) {
       console.error("Lỗi khi logout:", err);
       toast.error("Đăng xuất thất bại");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -93,11 +96,29 @@ const AdminDashboard = () => {
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Danh sách liên hệ</h2>
-        <button
+        {/* <button
           onClick={handleLogout}
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
         >
           Đăng xuất
+        </button> */}
+         <button
+          onClick={handleLogout}
+          disabled={isLoading}
+          className={`bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600transition-all duration-200 ${
+            isLoading
+              ? "bg-gray-500 cursor-not-allowed"
+              : "bg-black hover:bg-gray-800"
+          }`}
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Đang đăng xuất...
+            </div>
+          ) : (
+            "Đăng xuất"
+          )}
         </button>
       </div>
 
@@ -126,7 +147,9 @@ const AdminDashboard = () => {
                 <td className="py-2 px-4 border">{contact.email}</td>
                 <td className="py-2 px-4 border">{contact.phone}</td>
                 <td className="text-left py-2 px-4 border whitespace-pre-wrap">
-                  <ReactMarkdown>{contact.details.replace(/__/g, '\\_\\_')}</ReactMarkdown>
+                  <ReactMarkdown>
+                    {contact.details.replace(/__/g, "\\_\\_")}
+                  </ReactMarkdown>
                 </td>
                 <td className="py-2 px-4 border text-sm text-gray-500">
                   {new Date(contact.createdAt).toLocaleString("vi-VN")}

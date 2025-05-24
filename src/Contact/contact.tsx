@@ -1,8 +1,9 @@
 import { useState } from "react";
 import React from "react";
 import api from "../api.ts";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-hot-toast";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -207,7 +208,7 @@ const Contact = () => {
           </button>
         </form>
       </div>
-      <ToastContainer position="top-right" autoClose={3000} />
+      {/* <ToastContainer position="top-right" autoClose={3000} /> */}
     </div>
   );
 };
