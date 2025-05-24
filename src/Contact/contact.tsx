@@ -1,6 +1,8 @@
 import { useState } from "react";
 import React from "react";
 import api from "../api.ts";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -8,28 +10,61 @@ const Contact = () => {
     phone: "",
     details: "",
   });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    details: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
+  const isValidPhone = (phone: string) => /^[0-9]{8,11}$/.test(phone);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const { name, email, phone, details } = formData;
+
+    const newErrors = {
+      name: name ? "" : "Tên không được để trống.",
+      email: isValidEmail(email) ? "" : "Email không hợp lệ.",
+      phone: isValidPhone(phone) ? "" : "SĐT phải từ 8 hoặc 11 chữ số.",
+      details: details ? "" : "Nội dung không được để trống.",
+    };
+
+    setErrors(newErrors);
+
+    const hasErrors = Object.values(newErrors).some((msg) => msg !== "");
+    if (hasErrors) {
+      toast.error("Vui lòng kiểm tra lại các trường dữ liệu.");
+      return;
+    }
+    setIsSubmitting(true);
     try {
       await api.post("/contacts", formData);
-      alert("Gửi thông tin thành công!");
+      toast.success("Gửi thông tin thành công!");
       setFormData({ name: "", email: "", phone: "", details: "" });
     } catch (err) {
       console.error("Lỗi khi gửi thông tin:", err);
-      alert("Gửi thất bại!");
+      toast.error("Gửi thất bại. Vui lòng thử lại.");
+    } finally {
+      setIsSubmitting(false); // Kết thúc gửi
     }
   };
+
   return (
     <div className="px-4 sm:px-8 py-12 mx-auto  max-w-[760px]">
       <h2 className="text-4xl font-bold text-center mb-2">Góc Liên Hệ</h2>
-      <p className="text-center text-gray-500 mb-10">Hãy để lại lời nhắn, tôi sẽ phản hồi trong thời gian sớm nhất!</p>
+      <p className="text-center text-gray-500 mb-10">
+        Hãy để lại lời nhắn, tôi sẽ phản hồi trong thời gian sớm nhất!
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-10 items-stretch justify-center">
         <div className="space-y-6 ">
@@ -99,13 +134,16 @@ const Contact = () => {
 
         {/* Right Side - Contact Form */}
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <a className="font-bold ">Gửi tôi mô tả công việc hoặc lời nhắn của bạn</a>
+          <a className="font-bold ">
+            Gửi tôi mô tả công việc hoặc lời nhắn của bạn
+          </a>
           <FormInput
             label="Name"
             placeholder="Insert your name"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            error={errors.name}
           />
           <FormInput
             label="Mail"
@@ -113,6 +151,7 @@ const Contact = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            error={errors.email}
           />
           <FormInput
             label="Phone Number"
@@ -120,6 +159,7 @@ const Contact = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
+            error={errors.phone}
           />
           <FormTextArea
             label="Details"
@@ -127,15 +167,47 @@ const Contact = () => {
             name="details"
             value={formData.details}
             onChange={handleChange}
+            error={errors.details}
           />
           <button
             type="submit"
-            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+            disabled={isSubmitting}
+            className={` items-center cursor-pointer justify-center gap-2 bg-black text-white px-6 py-2 rounded ${
+              isSubmitting
+                ? "opacity-60 cursor-not-allowed"
+                : "hover:bg-gray-800"
+            }`}
           >
-            Send Message
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <svg
+                  className="w-4 h-4 animate-spin text-white"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="white"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="white"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
+                </svg>
+                <span>Đang gửi...</span>
+              </div>
+            ) : (
+              "Gửi tin nhắn"
+            )}
           </button>
         </form>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };
@@ -180,11 +252,13 @@ const FormInput = ({
   name,
   value,
   onChange,
+  error,
 }: {
   label: string;
   placeholder: string;
   name: string;
   value: string;
+  error?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => (
   <div className="relative w-full mt-6">
@@ -194,11 +268,14 @@ const FormInput = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="peer w-full border border-gray-400 rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-15"
+      className={`peer w-full border ${
+        error ? "border-red-500" : "border-gray-400"
+      } rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black`}
     />
     <label className="absolute left-3 -top-3 bg-[#f2f2f2] px-1 text-sm text-gray-500 peer-focus:text-black">
       {label}
     </label>
+    {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
   </div>
 );
 
@@ -208,11 +285,13 @@ const FormTextArea = ({
   name,
   value,
   onChange,
+  error,
 }: {
   label: string;
   placeholder: string;
   name: string;
   value: string;
+  error?: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }) => (
   <div className="relative w-full mt-6">
@@ -221,10 +300,13 @@ const FormTextArea = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="peer w-full resize-none border border-gray-400 rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-60 "
-    ></textarea>
+      className={`peer w-full resize-none border ${
+        error ? "border-red-500" : "border-gray-400"
+      } rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-40`}
+    />
     <label className="absolute left-3 -top-3 bg-[#f2f2f2] px-1 text-sm text-gray-500 peer-focus:text-black">
       {label}
     </label>
+    {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
   </div>
 );

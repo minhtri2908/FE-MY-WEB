@@ -1,10 +1,9 @@
-import { Routes, Route } from "react-router-dom";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Navigate } from "react-router-dom";
+import { Navigate, BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import "./index.css";
 import App from "./App.tsx";
 import About from "./About/about";
@@ -53,6 +52,33 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Root />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            fontSize: "18px",
+            padding: "24px 24px",
+            background: "#333",
+            color: "#fff",
+            borderRadius: "12px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+          },
+          success: {
+            iconTheme: {
+              primary: "#4ade80", // màu xanh thành công
+              secondary: "#fff",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#f87171", // màu đỏ lỗi
+              secondary: "#fff",
+            },
+          },
+          
+        }}
+      />
     </BrowserRouter>
   </StrictMode>
 );
