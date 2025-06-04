@@ -10,8 +10,8 @@ import About from "./About/about";
 import Story from "./Story/story";
 import Hobby from "./Hobby/hobby";
 import Work from "./Work/work";
-import AdminLogin from "./AdminLogin/AdminLogin.tsx";
-import AdminDashboard from "./AdminLogin/AdminDashboard";
+import AdminLogin from "./Admin_page/AdminLogin.tsx";
+import AdminDashboard from "./Admin_page/AdminDashboard.tsx";
 import RequireAdminAuth from "./RequireAdminAuth.tsx";
 import ScrollToTopButton from "./component/ScrollToTopButton.tsx";
 import TitleUpdater from "./component/TitleUpdater.tsx";
@@ -24,6 +24,7 @@ const Root = () => {
       <div className="flex-grow pt-20 px-4 overflow-x-hidden">
         <TitleUpdater />
         <Routes>
+          <Route path="/" element={<App />} />
           <Route
             path="/admin"
             element={<Navigate to="/admin/dashboard" replace />}
@@ -37,7 +38,6 @@ const Root = () => {
               </RequireAdminAuth>
             }
           />
-          <Route path="/" element={<App />} />
           <Route path="/about" element={<About />} />
           <Route path="/story" element={<Story />} />
           <Route path="/hobby" element={<Hobby />} />
@@ -78,7 +78,6 @@ createRoot(document.getElementById("root")!).render(
               secondary: "#fff",
             },
           },
-          
         }}
       />
     </BrowserRouter>

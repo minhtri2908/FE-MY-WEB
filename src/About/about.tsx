@@ -35,6 +35,16 @@ export default function About() {
     category: string;
     items: string[];
   };
+  type AdminProfile = {
+    name: string;
+    jobTitle: string;
+    about: string;
+    cvLink: string;
+  };
+
+  const [admin, setAdmin] = useState<AdminProfile | null>(null);
+  const [adminLoading, setAdminLoading] = useState(true);
+
   const [skills, setSkills] = useState<Skill[]>([]);
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [educations, setEducations] = useState<Education[]>([]);
@@ -64,6 +74,13 @@ export default function About() {
       .catch((err) => console.error("Error fetching educations:", err))
       .finally(() => setEducationsLoading(false));
   }, []);
+  useEffect(() => {
+    api
+      .get("/admin/public-profile")
+      .then((res) => setAdmin(res.data))
+      .catch((err) => console.error("Error fetching admin profile:", err))
+      .finally(() => setAdminLoading(false));
+  }, []);
 
   return (
     <>
@@ -80,12 +97,15 @@ export default function About() {
           <div className="w-full flex items-center justify-between flex-wrap gap-2">
             <div>
               <h2 className="flex">
-                <strong className="text-[1.7rem]">Phạm Minh Trí</strong>
+                <strong className="text-[1.7rem]">
+                  {adminLoading ? "..." : admin?.name}
+                </strong>
               </h2>
               <div className="pt-[10px] flex items-center flex-wrap gap-2">
                 <span className="font-semibold text-lg">
-                  Intern Fullstack Developer
+                  {adminLoading ? "..." : admin?.jobTitle}
                 </span>
+
                 {tags.map((tag, index) => (
                   <span
                     key={index}
@@ -96,15 +116,17 @@ export default function About() {
                 ))}
               </div>
             </div>
-            <a
-              href="https://drive.google.com/uc?export=download&id=1iM2yL8wNUmYWzXKJFdc0G6v285LNCN-w"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-800 transition"
-            >
-              Download CV
-              <FileDown className="w-4 h-4" />
-            </a>
+            {admin?.cvLink && (
+              <a
+                href={admin.cvLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-800 transition"
+              >
+                Download CV
+                <FileDown className="w-4 h-4" />
+              </a>
+            )}
           </div>
 
           <hr className="mt-2 border-t border-gray-300" />
@@ -113,11 +135,9 @@ export default function About() {
             <strong className="flex pt-[50px]">Đôi Lời</strong>
           </h2>
           <blockquote className="border-l-4 text-[1.2rem] border-blue-400 pl-4 italic text-gray-700 px-5 py-2.5 m-[40px]">
-            <p>
-              Lập trình là đam mê, nhiếp ảnh là lối thoát. Lúc bug dí tận cổ, ta
-              cầm máy đi săn ánh sáng.
-            </p>
+            <p>{adminLoading ? "Đang tải..." : admin?.about}</p>
           </blockquote>
+
           {/* PHẦN HIỂN THỊ KINH NGHIỆM */}
           <h2 className="flex pt-[30px] font-bold text-[1.8rem]">
             Kinh nghiệm

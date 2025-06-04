@@ -1,8 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import api from "../api.ts";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import FormRichText from "../component/FormRichText.tsx";
 import { toast } from "react-hot-toast";
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -20,9 +19,12 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isValidEmail = (email: string) => /\S+@\S+\.\S+/.test(email);
   const isValidPhone = (phone: string) => /^[0-9]{8,11}$/.test(phone);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | { target: { name: string; value: string } }
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -30,6 +32,7 @@ const Contact = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setHasSubmitted(true);
     e.preventDefault();
     const { name, email, phone, details } = formData;
 
@@ -37,7 +40,11 @@ const Contact = () => {
       name: name ? "" : "Tên không được để trống.",
       email: isValidEmail(email) ? "" : "Email không hợp lệ.",
       phone: isValidPhone(phone) ? "" : "SĐT phải từ 8 hoặc 11 chữ số.",
-      details: details ? "" : "Nội dung không được để trống.",
+      details: new DOMParser()
+        .parseFromString(details, "text/html")
+        .body.textContent?.trim()
+        ? ""
+        : "Nội dung không được để trống.",
     };
 
     setErrors(newErrors);
@@ -144,7 +151,7 @@ const Contact = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            error={errors.name}
+            error={hasSubmitted ? errors.name : ""}
           />
           <FormInput
             label="Mail"
@@ -152,7 +159,7 @@ const Contact = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            error={errors.email}
+            error={hasSubmitted ? errors.email : ""}
           />
           <FormInput
             label="Phone Number"
@@ -160,16 +167,25 @@ const Contact = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            error={errors.phone}
+            error={hasSubmitted ? errors.phone : ""}
           />
-          <FormTextArea
+          {/* <FormTextArea
             label="Details"
             placeholder="Write your details"
             name="details"
             value={formData.details}
             onChange={handleChange}
             error={errors.details}
+          /> */}
+          <FormRichText
+            name="details"
+            label="Details"
+            placeholder="Write your details"
+            value={formData.details}
+            onChange={handleChange}
+            error={hasSubmitted ? errors.details : ""}
           />
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -280,34 +296,34 @@ const FormInput = ({
   </div>
 );
 
-const FormTextArea = ({
-  label,
-  placeholder,
-  name,
-  value,
-  onChange,
-  error,
-}: {
-  label: string;
-  placeholder: string;
-  name: string;
-  value: string;
-  error?: string;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-}) => (
-  <div className="relative w-full mt-6">
-    <textarea
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className={`peer w-full resize-none border ${
-        error ? "border-red-500" : "border-gray-400"
-      } rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-40`}
-    />
-    <label className="absolute left-3 -top-3 bg-[#f2f2f2] px-1 text-sm text-gray-500 peer-focus:text-black">
-      {label}
-    </label>
-    {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-  </div>
-);
+// const FormTextArea = ({
+//   label,
+//   placeholder,
+//   name,
+//   value,
+//   onChange,
+//   error,
+// }: {
+//   label: string;
+//   placeholder: string;
+//   name: string;
+//   value: string;
+//   error?: string;
+//   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+// }) => (
+//   <div className="relative w-full mt-6">
+//     <textarea
+//       name={name}
+//       value={value}
+//       onChange={onChange}
+//       placeholder={placeholder}
+//       className={`peer w-full resize-none border ${
+//         error ? "border-red-500" : "border-gray-400"
+//       } rounded-md px-4 pt-4 pb-2 focus:outline-none focus:border-black h-40`}
+//     />
+//     <label className="absolute left-3 -top-3 bg-[#f2f2f2] px-1 text-sm text-gray-500 peer-focus:text-black">
+//       {label}
+//     </label>
+//     {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+//   </div>
+// );

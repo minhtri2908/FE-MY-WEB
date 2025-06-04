@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api";
+import api from "../../api";
 import toast from "react-hot-toast";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 
 type Contact = {
   _id: string;
@@ -13,7 +13,10 @@ type Contact = {
   createdAt: string;
 };
 
-const AdminDashboard = () => {
+const AdminContacts = () => {
+  const [searchEmail, setSearchEmail] = useState("");
+  const [searchPhone, setSearchPhone] = useState("");
+
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
@@ -33,6 +36,25 @@ const AdminDashboard = () => {
     } catch (err) {
       console.error("Lỗi khi lấy danh sách liên hệ:", err);
       setError("Không thể lấy danh sách liên hệ. Vui lòng đăng nhập lại.");
+    }
+  };
+  const fetchSearchedContacts = async () => {
+    try {
+      const queryParams = new URLSearchParams();
+      if (searchEmail) queryParams.append("email", searchEmail);
+      if (searchPhone) queryParams.append("phone", searchPhone);
+
+      const res = await api.get(`/contacts/search?${queryParams.toString()}`, {
+        withCredentials: true,
+      });
+
+      setContacts(res.data.contacts);
+      setTotalPages(1);
+      setPage(1);
+      setError("");
+    } catch (err) {
+      console.error("Lỗi khi tìm kiếm liên hệ:", err);
+      setError("Không thể tìm kiếm liên hệ.");
     }
   };
 
@@ -96,13 +118,42 @@ const AdminDashboard = () => {
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold">Danh sách liên hệ</h2>
-        {/* <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Đăng xuất
-        </button> */}
-         <button
+        {/* Thanh tìm kiếm */}
+        <div className="flex flex-col sm:flex-row gap-2 mb-4 ">
+          <input
+            type="text"
+            placeholder="Tìm theo email"
+            className="border p-2 rounded w-full sm:w-1/2 h-10"
+            value={searchEmail}
+            onChange={(e) => setSearchEmail(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Tìm theo số điện thoại"
+            className="border p-2 rounded w-full sm:w-1/2 h-10"
+            value={searchPhone}
+            onChange={(e) => setSearchPhone(e.target.value)}
+          />
+          <button
+            onClick={fetchSearchedContacts}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 h-10 text-sm"
+          >
+            Tìm
+          </button>
+
+          <button
+            onClick={() => {
+              setSearchEmail("");
+              setSearchPhone("");
+              setPage(1);
+              fetchContacts();
+            }}
+            className="px-4  bg-gray-200 rounded hover:bg-gray-300 h-10 text-xs"
+          >
+            Xoá bộ lọc
+          </button>
+        </div>
+        <button
           onClick={handleLogout}
           disabled={isLoading}
           className={`bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600transition-all duration-200 ${
@@ -146,10 +197,16 @@ const AdminDashboard = () => {
                 <td className="py-2 px-4 border">{contact.name}</td>
                 <td className="py-2 px-4 border">{contact.email}</td>
                 <td className="py-2 px-4 border">{contact.phone}</td>
-                <td className="text-left py-2 px-4 border whitespace-pre-wrap">
+                {/* <td className="text-left py-2 px-4 border whitespace-pre-wrap">
                   <ReactMarkdown>
                     {contact.details.replace(/__/g, "\\_\\_")}
                   </ReactMarkdown>
+                </td> */}
+                <td className="text-left py-2 px-4 border">
+                  <div
+                    className="prose max-w-none text-sm [&_a]:underline [&_a]:text-blue-600 [&_a:hover]:text-blue-800"
+                    dangerouslySetInnerHTML={{ __html: contact.details }}
+                  />
                 </td>
                 <td className="py-2 px-4 border text-sm text-gray-500">
                   {new Date(contact.createdAt).toLocaleString("vi-VN")}
@@ -194,4 +251,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdminContacts;
