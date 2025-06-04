@@ -1,4 +1,4 @@
-import { Plus, Pencil } from "lucide-react";
+import { Plus } from "lucide-react";
 import { toast } from "react-hot-toast";
 
  type Education = {
@@ -11,7 +11,7 @@ import { toast } from "react-hot-toast";
 
 export default function AdminEducationsList({
   educations,
- seteducation,
+//  seteducation,
 }: {
   educations: Education[];
   seteducation: React.Dispatch<React.SetStateAction<Education[]>>;

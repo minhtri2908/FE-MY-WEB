@@ -9,7 +9,7 @@ type Skill = {
 
 export default function AdminSkillsList({
   skills,
-  setskill,
+  // setskill,
 }: {
   skills: Skill[];
   setskill: React.Dispatch<React.SetStateAction<Skill[]>>;

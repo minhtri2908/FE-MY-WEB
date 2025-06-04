@@ -53,9 +53,6 @@ export default function AdminInformations() {
   const [adminLoading, setAdminLoading] = useState(true);
   const [experiencesLoading, setExperiencesLoading] = useState(true);
   const [educationsLoading, setEducationsLoading] = useState(true);
-  const [editedExperience, setEditedExperience] = useState<Experience | null>(
-    null
-  );
 
   useEffect(() => {
     const fetchAllData = async () => {
