@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import toast from "react-hot-toast";
 // import ReactMarkdown from "react-markdown";
@@ -22,8 +21,6 @@ const AdminContacts = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10;
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const fetchContacts = async () => {
     try {
@@ -62,19 +59,7 @@ const AdminContacts = () => {
     fetchContacts();
   }, [page]);
 
-  const handleLogout = async () => {
-    setIsLoading(true);
-    try {
-      await api.post("/admin/logout", null, { withCredentials: true });
-      navigate("/admin/login");
-    } catch (err) {
-      console.error("Lỗi khi logout:", err);
-      toast.error("Đăng xuất thất bại");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  
   const handleDelete = async (id: string) => {
     toast(
       (t) => (
@@ -153,24 +138,6 @@ const AdminContacts = () => {
             Xoá bộ lọc
           </button>
         </div>
-        <button
-          onClick={handleLogout}
-          disabled={isLoading}
-          className={`bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600transition-all duration-200 ${
-            isLoading
-              ? "bg-gray-500 cursor-not-allowed"
-              : "bg-black hover:bg-gray-800"
-          }`}
-        >
-          {isLoading ? (
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              Đang đăng xuất...
-            </div>
-          ) : (
-            "Đăng xuất"
-          )}
-        </button>
       </div>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}

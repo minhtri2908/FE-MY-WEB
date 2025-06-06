@@ -1,23 +1,29 @@
-import { useState,useEffect } from "react";
-
+import { useState, useEffect } from "react";
+import { useLocation,useNavigate } from "react-router-dom";
+import api from "./api";
+import toast from "react-hot-toast";
 const data = [
   { label: "Giới thiệu", href: "/about" },
-  { label: "Chuyện nghề", href: "/story" }
+  { label: "Chuyện nghề", href: "/story" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
-  const commandText = 'TriMinhPham';
+  const commandText = "TriMinhPham";
   const [cursorVisible, setCursorVisible] = useState(true);
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/admin/dashboard");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setOpen(false);
       }
     };
-  
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -37,15 +43,31 @@ export default function Navbar() {
     }, 500); // Toggle cursor visibility every 500ms
     return () => clearInterval(cursorInterval);
   }, []);
-
-  
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      await api.post("/admin/logout", null, { withCredentials: true });
+      navigate("/admin/login");
+    } catch (err) {
+      console.error("Lỗi khi logout:", err);
+      toast.error("Đăng xuất thất bại");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <nav className="p-[20px] shadow-md z-50 bg-white fixed top-0 left-0 w-full">
       <div className="flex items-center justify-between mx-auto w-full max-w-[760px]">
-      <a href="/" className="font-mono font-bold text-lg text-black px-2 py-1 rounded-md">
-          <span className="text-green-400">{'>'}</span> {text}
-          <span className={cursorVisible ? 'text-green-400' : 'invisible'}>|</span>
+        <a
+          href="/"
+          className="font-mono font-bold text-lg text-black px-2 py-1 rounded-md"
+        >
+          <span className="text-green-400">{">"}</span> {text}
+          <span className={cursorVisible ? "text-green-400" : "invisible"}>
+            |
+          </span>
         </a>
+        
         {/* Hamburger icon */}
         <div className="md:hidden">
           <button onClick={() => setOpen(!open)} className="focus:outline-none">
@@ -78,11 +100,35 @@ export default function Navbar() {
         {/* Desktop menu */}
         <div className="hidden md:flex space-x-6">
           {data.map((item, index) => (
-            <a key={index} href={item.href} className="text-base hover:underline">
+            <a
+              key={index}
+              href={item.href}
+              className="text-base hover:underline"
+            >
               {item.label}
             </a>
           ))}
         </div>
+        {isAdminPage && (
+        <button
+          onClick={handleLogout}
+          disabled={isLoading}
+          className={`bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600transition-all duration-200 md:flex ${
+            isLoading
+              ? "bg-gray-500 cursor-not-allowed"
+              : "bg-black hover:bg-gray-800"
+          }`}
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center gap-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              Đang đăng xuất...
+            </div>
+          ) : (
+            "Đăng xuất"
+          )}
+        </button>
+      )}
       </div>
 
       {/* Mobile popup menu */}
@@ -133,6 +179,7 @@ export default function Navbar() {
           onClick={() => setOpen(false)}
         ></div>
       )}
+      
     </nav>
   );
 }

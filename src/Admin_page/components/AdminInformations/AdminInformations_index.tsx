@@ -27,6 +27,7 @@ export default function AdminInformations() {
   };
 
   type Education = {
+    _id: string;
     degree: string;
     school: string;
     university: string;
@@ -34,6 +35,7 @@ export default function AdminInformations() {
     batch: string;
   };
   type Skill = {
+    _id: string;
     category: string;
     items: string[];
   };
@@ -123,7 +125,10 @@ export default function AdminInformations() {
         {educationsLoading ? (
           <Spinner />
         ) : (
-          <AdminEducationsList educations={educations} seteducation={setEducations} />
+          <AdminEducationsList
+            educations={educations}
+            seteducation={setEducations}
+          />
         )}
       </div>
     </article>
